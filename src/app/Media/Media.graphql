@@ -1,0 +1,25 @@
+type Media {
+  id: ID!
+  spotId: ID!
+  spot: Spot
+  userId: ID!
+  user: User
+  url: String!
+  title: String
+  created_at: Int
+  updated_at: Int
+}
+
+input MediaInput {
+  userId: ID!
+  url: String!
+  title: String
+}
+
+type Query {
+  media(id: ID!): Media
+}
+
+type Mutation {
+  createMedia(input: MediaInput): Media
+}

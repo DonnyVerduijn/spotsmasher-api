@@ -1,0 +1,37 @@
+type IPStackResponse {
+  ip: String
+  hostname: String
+  type: String
+  continent_code: String
+  continent_name: String
+  country_code: String
+  country_name: String
+  region_code: String
+  region_name: String
+  city: String
+  zip: String
+  latitude: Float
+  longitude: Float
+  location: IPStackLocation
+}
+
+type IPStackLocation {
+  geoname_id: Int
+  capital: String
+  languages: IPStackLocationLanguages
+  country_flag: String
+  country_flag_emoji: String
+  country_flag_emoji_unicode: String
+  calling_code: String
+  is_eu: Boolean
+}
+
+type IPStackLocationLanguages {
+  code: String
+  name: String
+  native: String
+}
+
+type Query {
+  ipToLocation(ipAddress: String!): IPStackResponse
+}

@@ -1,0 +1,113 @@
+type Spot {
+  id: ID
+  slug: String
+  title: String
+  description: String
+  location: PointObject
+  attributes: [Attribute]
+  media: [Media]
+  distance: Float
+  created_at: Int
+  isUnlocked: Boolean
+}
+
+type SpotSearchResponse {
+  id: ID!
+  results: [SpotUnion]
+  total: Int
+}
+
+type SpotList {
+  results: [SpotUnion]
+  total: Int
+}
+
+input SpotInput {
+  title: String!
+  description: String!
+}
+
+input LatLngInput {
+  latitude: Float
+  longitude: Float
+  lat: Float
+  lng: Float
+}
+
+enum DirectionEnum {
+  ASC
+  DESC
+}
+
+enum UserSortFieldEnum {
+  DISTANCE
+  CREATED_AT
+}
+
+input SpotOrderByInput {
+  column: UserSortFieldEnum = NAME
+  direction: DirectionEnum = ASC
+}
+
+input AttributeFilterInput {
+  selected: [ID]!
+}
+
+input SpotSearchFilterInput {
+  OrderingFilter: SpotOrderByInput
+  SelectedPlace: SelectedPlaceInput
+  RangeFilter: RangeFilterInput
+  limit: Int = 10
+  offset: Int = 0
+  TypeFilter: AttributeFilterInput
+  SpotObjectsFilter: AttributeFilterInput
+  SpotOptionsFilter: AttributeFilterInput
+  ParkDisciplinesFilter: AttributeFilterInput
+  ParkOptionsFilter: AttributeFilterInput
+}
+
+input RangeFilterInput {
+  value: Int = 1000
+}
+
+input SpotSearchInput {
+  filters: SpotSearchFilterInput
+}
+
+input SelectedPlaceInput {
+  location: LatLngInput
+  name: String
+}
+
+type UnlockedSpot {
+  id: ID
+  slug: String
+  title: String
+  description: String
+  location: PointObject
+  attributes: [Attribute]
+  media: [Media]
+  distance: Float
+  created_at: Int
+}
+
+type LockedSpot {
+  id: ID
+  attributes: [Attribute]
+  media: [Media]
+  created_at: Int
+}
+
+union SpotUnion = LockedSpot | UnlockedSpot
+
+type Query {
+  SpotSearchResponse(input: SpotSearchInput): SpotSearchResponse
+  Spot(id: ID): SpotUnion
+}
+
+type Mutation {
+  updateSpot(id: ID!, input: SpotInput): SpotUnion
+  createSpot(input: SpotInput): SpotUnion
+  deleteSpot(id: ID!): ID
+  unlockSpot(id: ID!): SpotUnion
+}

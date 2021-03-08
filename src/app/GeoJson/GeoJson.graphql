@@ -1,0 +1,113 @@
+enum GeoJSONType {
+  Point
+  MultiPoint
+  LineString
+  MultiLineString
+  Polygon
+  MultiPolygon
+  GeometryCollection
+  Feature
+  FeatureCollection
+}
+
+scalar CoordinatesScalar
+scalar JsonScalar
+
+type PointObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type MultiPointObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type LineStringObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type MultiLineStringObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type PolygonInterfacObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type MultiLinePolygonObject implements GeoJSONInterface & GeometryInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+type GeometryCollectionObject implements GeoJSONInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  geometries: [GeometryInterface!]!
+}
+
+type FeatureObject implements GeoJSONInterface {
+  type: GeoJSONType!
+  crs: CoordinateReferenceSystemObject!
+  bbox: [Float]
+  geometry: GeometryInterface
+  properties: JsonScalar
+  id: String
+}
+
+type FeatureCollectionObject implements GeoJSONInterface {
+  type: GeoJSONType
+  crs: CoordinateReferenceSystemObject
+  bbox: [Float]
+  features: [FeatureObject!]!
+}
+
+interface GeoJSONInterface {
+  type: GeoJSONType
+  crs: CoordinateReferenceSystemObject
+  bbox: [Float]
+}
+
+interface GeometryInterface {
+  type: GeoJSONType
+  crs: CoordinateReferenceSystemObject
+  bbox: [Float]
+  coordinates: CoordinatesScalar
+}
+
+enum CRSGeoJSONType {
+  name
+  link
+}
+
+type NamedCRSPropertiesObject {
+  name: String
+}
+
+type LinkedCRSPropertiesObject {
+  href: String!
+  type: String
+}
+
+union CRSPropertiesUnion = NamedCRSPropertiesObject | LinkedCRSPropertiesObject
+
+type CoordinateReferenceSystemObject {
+  type: CRSGeoJSONType!
+  properties: CRSPropertiesUnion!
+}

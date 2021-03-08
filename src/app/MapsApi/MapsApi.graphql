@@ -1,0 +1,96 @@
+input GeocodeInput {
+  address: String
+}
+
+input PlaceInput {
+  placeid: String
+}
+
+input LatLngInput {
+  latitude: Float
+  longitude: Float
+  lat: Float
+  lng: Float
+}
+
+input ReverseGeocodeInput {
+  latlng: LatLngInput
+}
+
+input PlacesAutoCompleteInput {
+  input: String!
+  sessiontoken: String
+  offset: Int
+}
+
+type AddressComponent {
+  long_name: String
+  short_name: String
+  type: [String]
+}
+
+type Geometry {
+  location: LatLng
+  location_type: String
+  viewport: ViewPort
+}
+
+type ViewPort {
+  northeast: LatLng
+  southwest: LatLng
+}
+
+type LatLng {
+  lat: Float!
+  lng: Float!
+}
+
+type Place {
+  address_components: [AddressComponent]
+  formatted_address: String
+  geometry: Geometry
+  place_id: String
+  types: [String]
+  url: String
+  scope: String
+  reference: String
+  id: String
+  name: String
+  photos: [String]
+  icon: String
+  adr_address: String
+}
+
+type MatchedSubstrings {
+  length: Int
+  offset: Int
+}
+
+type StructuredFormatting {
+  main_text: String
+  main_text_matched_substrings: MatchedSubstrings
+  secondary_text: String
+}
+
+type Term {
+  offset: Int
+  value: String
+}
+
+type Prediction {
+  description: String
+  id: String
+  matched_substrings: MatchedSubstrings
+  place_id: String
+  reference: String
+  structured_formatting: StructuredFormatting
+  terms: [Term]
+  types: [String]
+}
+
+type Query {
+  placesAutoComplete(input: PlacesAutoCompleteInput!): [Prediction]
+  geocode(input: GeocodeInput!): [Place]
+  place(input: PlaceInput!): Place
+  reverseGeocode(input: ReverseGeocodeInput!): Place
+}

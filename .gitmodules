@@ -1,0 +1,8 @@
+[submodule "db"]
+	path = db
+	url = https://gitlab.com/spotsmasher/db
+	branch = master
+[submodule "db-runner"]
+	path = db-runner
+	url = https://gitlab.com/spotsmasher/db-runner
+	branch = master

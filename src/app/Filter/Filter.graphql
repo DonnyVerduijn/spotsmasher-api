@@ -1,0 +1,13 @@
+type Filter {
+  id: ID
+  name: String
+  attributes: [Attribute]!
+}
+
+type Query {
+  TypeFilter: Filter
+  SpotObjectsFilter: Filter
+  SpotOptionsFilter: Filter
+  ParkDisciplinesFilter: Filter
+  ParkOptionsFilter: Filter
+}

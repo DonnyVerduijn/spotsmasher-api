@@ -1,0 +1,20 @@
+type Attribute {
+  id: ID!
+  name: String!
+  value: Boolean
+}
+
+input AttributeInput {
+  name: String!
+}
+
+type Query {
+  attribute(id: ID!): Attribute!
+  attributes: [Attribute]
+}
+
+type Mutation {
+  updateAttribute(id: ID!, input: AttributeInput): Attribute
+  createAttribute(input: AttributeInput): Attribute
+  deleteAttribute(id: ID!): Attribute
+}
